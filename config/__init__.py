@@ -1,3 +1,7 @@
+import os
+import platform
+
+
 VERSION = "v1.0"
 BANNER = rf'''  ____                                       _   _                   _               
  |  _ \    ___   _ __ ___     ___    _ __   | | | |  _   _   _ __   | |_    ___   _ __     {VERSION} 
@@ -7,4 +11,5 @@ BANNER = rf'''  ____                                       _   _                
                                                                                            
                                                                                            --- By Moofeng
 '''
-# print(BANNER)
+ROOT_PATH = os.getcwd()
+SYSTEM = platform.system()

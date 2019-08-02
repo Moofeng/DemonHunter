@@ -14,6 +14,7 @@ _method=__construct&filter[]=system&method=get&server[REQUEST_METHOD]=id
 
 import requests
 import random
+import logging
 import hashlib
 
 from lib.core.md5 import random_md5
