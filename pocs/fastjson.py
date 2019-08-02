@@ -32,7 +32,7 @@ def get_info():
     }
 
 
-def verify(ip, port, cmd="uname"):
+def verify(ip, port):
     # 切换到.class文件所在目录
     web_dir = os.path.join(os.path.dirname(__file__), "../data/fastjson")
     os.chdir(web_dir)

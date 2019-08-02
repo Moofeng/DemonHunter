@@ -19,4 +19,3 @@ def verify(ip, port, cmd="uname"):
     else:
         return None
 
-verify("107.174.27.242", 8076)

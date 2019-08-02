@@ -19,4 +19,3 @@ def verify(ip, port, cmd=f"echo -n '{random_string}'|md5sum|cut -d ' ' -f1"):
     else:
         return None
 
-print(verify("107.174.27.242", 8078))
