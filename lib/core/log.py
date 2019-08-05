@@ -29,4 +29,4 @@ ch.setFormatter(formatter)
 
 # 添加两个Handler
 logger.addHandler(ch)
-logger.addHandler(fh)
+# logger.addHandler(fh)
