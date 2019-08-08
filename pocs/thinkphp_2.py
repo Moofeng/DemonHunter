@@ -17,7 +17,7 @@ import random
 import logging
 import hashlib
 
-from lib.core.md5 import random_md5
+from lib.md5 import random_md5
 
 random_string, random_md5 = random_md5()
 

